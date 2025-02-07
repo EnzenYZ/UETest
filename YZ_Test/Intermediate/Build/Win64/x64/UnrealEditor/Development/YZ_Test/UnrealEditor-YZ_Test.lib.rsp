@@ -1,0 +1,24 @@
+/NOLOGO
+/errorReport:prompt
+/MACHINE:x64
+/SUBSYSTEM:WINDOWS
+/DEF
+/NAME:"UnrealEditor-YZ_Test.dll"
+/IGNORE:4221
+/NODEFAULTLIB
+"F:\Unreal Projects\YZ_Test\Intermediate\Build\Win64\x64\YZ_TestEditor\Development\UnrealEd\SharedPCH.UnrealEd.Project.ValApi.Cpp20.h.obj"
+"F:\Unreal Projects\YZ_Test\Intermediate\Build\Win64\x64\UnrealEditor\Development\YZ_Test\YZ_Test.init.gen.cpp.obj"
+"F:\Unreal Projects\YZ_Test\Intermediate\Build\Win64\x64\UnrealEditor\Development\YZ_Test\YZ_TestCharacter.gen.cpp.obj"
+"F:\Unreal Projects\YZ_Test\Intermediate\Build\Win64\x64\UnrealEditor\Development\YZ_Test\YZ_TestGameMode.gen.cpp.obj"
+"F:\Unreal Projects\YZ_Test\Intermediate\Build\Win64\x64\UnrealEditor\Development\YZ_Test\YZ_TestPickUpComponent.gen.cpp.obj"
+"F:\Unreal Projects\YZ_Test\Intermediate\Build\Win64\x64\UnrealEditor\Development\YZ_Test\YZ_TestProjectile.gen.cpp.obj"
+"F:\Unreal Projects\YZ_Test\Intermediate\Build\Win64\x64\UnrealEditor\Development\YZ_Test\YZ_TestWeaponComponent.gen.cpp.obj"
+"F:\Unreal Projects\YZ_Test\Intermediate\Build\Win64\x64\UnrealEditor\Development\YZ_Test\YZ_Test.cpp.obj"
+"F:\Unreal Projects\YZ_Test\Intermediate\Build\Win64\x64\UnrealEditor\Development\YZ_Test\YZ_TestCharacter.cpp.obj"
+"F:\Unreal Projects\YZ_Test\Intermediate\Build\Win64\x64\UnrealEditor\Development\YZ_Test\YZ_TestGameMode.cpp.obj"
+"F:\Unreal Projects\YZ_Test\Intermediate\Build\Win64\x64\UnrealEditor\Development\YZ_Test\YZ_TestPickUpComponent.cpp.obj"
+"F:\Unreal Projects\YZ_Test\Intermediate\Build\Win64\x64\UnrealEditor\Development\YZ_Test\YZ_TestProjectile.cpp.obj"
+"F:\Unreal Projects\YZ_Test\Intermediate\Build\Win64\x64\UnrealEditor\Development\YZ_Test\YZ_TestWeaponComponent.cpp.obj"
+"F:\Unreal Projects\YZ_Test\Intermediate\Build\Win64\x64\UnrealEditor\Development\YZ_Test\PerModuleInline.gen.cpp.obj"
+"F:\Unreal Projects\YZ_Test\Intermediate\Build\Win64\x64\UnrealEditor\Development\YZ_Test\Default.rc2.res"
+/OUT:"F:\Unreal Projects\YZ_Test\Intermediate\Build\Win64\x64\UnrealEditor\Development\YZ_Test\UnrealEditor-YZ_Test.lib"

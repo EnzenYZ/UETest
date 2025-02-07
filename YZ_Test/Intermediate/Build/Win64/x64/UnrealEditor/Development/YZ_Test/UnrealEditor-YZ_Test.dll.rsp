@@ -1,0 +1,86 @@
+/MANIFEST:EMBED
+/MANIFESTINPUT:"..\Build\Windows\Resources\Default-Win64.manifest"
+/NOLOGO
+/DEBUG:FULL
+/errorReport:prompt
+/MACHINE:x64
+/SUBSYSTEM:WINDOWS
+/FIXED:No
+/NXCOMPAT
+/STACK:12000000
+/DELAY:UNLOAD
+/DLL
+/PDBALTPATH:%_PDB%
+/d2:-ExtendedWarningInfo
+/OPT:NOREF
+/OPT:NOICF
+/INCREMENTAL:NO
+/ignore:4199
+/ignore:4099
+/ALTERNATENAME:__imp___std_init_once_begin_initialize=__imp_InitOnceBeginInitialize
+/ALTERNATENAME:__imp___std_init_once_complete=__imp_InitOnceComplete
+/DELAYLOAD:"d3d12.dll"
+/DELAYLOAD:"DBGHELP.DLL"
+/LIBPATH:"C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.41.34120\lib\x64"
+/LIBPATH:"C:\Program Files (x86)\Windows Kits\10\lib\10.0.22000.0\ucrt\x64"
+/LIBPATH:"C:\Program Files (x86)\Windows Kits\10\lib\10.0.22000.0\um\x64"
+/NODEFAULTLIB:"LIBCMT"
+/NODEFAULTLIB:"LIBCPMT"
+/NODEFAULTLIB:"LIBCMTD"
+/NODEFAULTLIB:"LIBCPMTD"
+/NODEFAULTLIB:"MSVCRTD"
+/NODEFAULTLIB:"MSVCPRTD"
+/NODEFAULTLIB:"LIBC"
+/NODEFAULTLIB:"LIBCP"
+/NODEFAULTLIB:"LIBCD"
+/NODEFAULTLIB:"LIBCPD"
+/FUNCTIONPADMIN:6
+/NOIMPLIB
+"F:\Unreal Projects\YZ_Test\Intermediate\Build\Win64\x64\YZ_TestEditor\Development\UnrealEd\SharedPCH.UnrealEd.Project.ValApi.Cpp20.h.obj"
+"F:\Unreal Projects\YZ_Test\Intermediate\Build\Win64\x64\UnrealEditor\Development\YZ_Test\YZ_Test.init.gen.cpp.obj"
+"F:\Unreal Projects\YZ_Test\Intermediate\Build\Win64\x64\UnrealEditor\Development\YZ_Test\YZ_TestCharacter.gen.cpp.obj"
+"F:\Unreal Projects\YZ_Test\Intermediate\Build\Win64\x64\UnrealEditor\Development\YZ_Test\YZ_TestGameMode.gen.cpp.obj"
+"F:\Unreal Projects\YZ_Test\Intermediate\Build\Win64\x64\UnrealEditor\Development\YZ_Test\YZ_TestPickUpComponent.gen.cpp.obj"
+"F:\Unreal Projects\YZ_Test\Intermediate\Build\Win64\x64\UnrealEditor\Development\YZ_Test\YZ_TestProjectile.gen.cpp.obj"
+"F:\Unreal Projects\YZ_Test\Intermediate\Build\Win64\x64\UnrealEditor\Development\YZ_Test\YZ_TestWeaponComponent.gen.cpp.obj"
+"F:\Unreal Projects\YZ_Test\Intermediate\Build\Win64\x64\UnrealEditor\Development\YZ_Test\YZ_Test.cpp.obj"
+"F:\Unreal Projects\YZ_Test\Intermediate\Build\Win64\x64\UnrealEditor\Development\YZ_Test\YZ_TestCharacter.cpp.obj"
+"F:\Unreal Projects\YZ_Test\Intermediate\Build\Win64\x64\UnrealEditor\Development\YZ_Test\YZ_TestGameMode.cpp.obj"
+"F:\Unreal Projects\YZ_Test\Intermediate\Build\Win64\x64\UnrealEditor\Development\YZ_Test\YZ_TestPickUpComponent.cpp.obj"
+"F:\Unreal Projects\YZ_Test\Intermediate\Build\Win64\x64\UnrealEditor\Development\YZ_Test\YZ_TestProjectile.cpp.obj"
+"F:\Unreal Projects\YZ_Test\Intermediate\Build\Win64\x64\UnrealEditor\Development\YZ_Test\YZ_TestWeaponComponent.cpp.obj"
+"F:\Unreal Projects\YZ_Test\Intermediate\Build\Win64\x64\UnrealEditor\Development\YZ_Test\PerModuleInline.gen.cpp.obj"
+"F:\Unreal Projects\YZ_Test\Intermediate\Build\Win64\x64\UnrealEditor\Development\YZ_Test\Default.rc2.res"
+"..\Intermediate\Build\Win64\x64\UnrealEditor\Development\Core\UnrealEditor-Core.lib"
+"..\Intermediate\Build\Win64\x64\UnrealEditor\Development\CoreUObject\UnrealEditor-CoreUObject.lib"
+"..\Intermediate\Build\Win64\x64\UnrealEditor\Development\Engine\UnrealEditor-Engine.lib"
+"..\Intermediate\Build\Win64\x64\UnrealEditor\Development\InputCore\UnrealEditor-InputCore.lib"
+"..\Plugins\EnhancedInput\Intermediate\Build\Win64\x64\UnrealEditor\Development\EnhancedInput\UnrealEditor-EnhancedInput.lib"
+"delayimp.lib"
+"wininet.lib"
+"rpcrt4.lib"
+"ws2_32.lib"
+"dbghelp.lib"
+"comctl32.lib"
+"Winmm.lib"
+"kernel32.lib"
+"user32.lib"
+"gdi32.lib"
+"winspool.lib"
+"comdlg32.lib"
+"advapi32.lib"
+"shell32.lib"
+"ole32.lib"
+"oleaut32.lib"
+"uuid.lib"
+"odbc32.lib"
+"odbccp32.lib"
+"netapi32.lib"
+"iphlpapi.lib"
+"setupapi.lib"
+"synchronization.lib"
+"dwmapi.lib"
+"imm32.lib"
+/OUT:"F:\Unreal Projects\YZ_Test\Binaries\Win64\UnrealEditor-YZ_Test.dll"
+/PDB:"F:\Unreal Projects\YZ_Test\Binaries\Win64\UnrealEditor-YZ_Test.pdb"
+/ignore:4078

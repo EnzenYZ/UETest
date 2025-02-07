@@ -1,0 +1,14 @@
+{
+	"Targets": [
+		{
+			"Name": "YZ_Test",
+			"Path": "..\\Source\\YZ_Test.Target.cs",
+			"Type": "Game"
+		},
+		{
+			"Name": "YZ_TestEditor",
+			"Path": "..\\Source\\YZ_TestEditor.Target.cs",
+			"Type": "Editor"
+		}
+	]
+}

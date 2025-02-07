@@ -1,0 +1,8 @@
+{
+	"SourceFiles": [
+		"F:\\Unreal Projects\\YZ_Test\\Source\\YZ_Test\\YZ_Test.Build.cs",
+		"F:\\Unreal Projects\\YZ_Test\\Source\\YZ_Test.Target.cs",
+		"F:\\Unreal Projects\\YZ_Test\\Source\\YZ_TestEditor.Target.cs"
+	],
+	"EngineVersion": "5.5.3"
+}

@@ -1,0 +1,14 @@
+{
+    "Version": "1.2",
+    "Data": {
+        "Source": "f:\\unreal projects\\yz_test\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\yz_test\\permoduleinline.gen.cpp",
+        "ProvidedModule": "",
+        "PCH": "f:\\unreal projects\\yz_test\\intermediate\\build\\win64\\x64\\yz_testeditor\\development\\unrealed\\sharedpch.unrealed.project.valapi.cpp20.h.pch",
+        "Includes": [
+            "f:\\unreal projects\\yz_test\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\yz_test\\definitions.yz_test.h",
+            "f:\\epicgames\\ue_5.5\\engine\\source\\runtime\\core\\public\\hal\\permoduleinline.inl"
+        ],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}
