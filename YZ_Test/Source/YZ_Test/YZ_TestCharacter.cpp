@@ -10,6 +10,8 @@
 #include "EnhancedInputSubsystems.h"
 #include "InputActionValue.h"
 #include "Engine/LocalPlayer.h"
+#include "AbilitySystemComponent.h"
+#include "HPAttributeSet.h"
 
 DEFINE_LOG_CATEGORY(LogTemplateCharacter);
 
@@ -35,6 +37,7 @@ AYZ_TestCharacter::AYZ_TestCharacter()
 	Mesh1P->CastShadow = false;
 	Mesh1P->SetRelativeLocation(FVector(-30.f, 0.f, -150.f));
 
+	AbilitySystemComponent = CreateDefaultSubobject<UAbilitySystemComponent>(TEXT("AbilitySystemComponent"));
 }
 
 //////////////////////////////////////////////////////////////////////////// Input
@@ -98,5 +101,16 @@ void AYZ_TestCharacter::Look(const FInputActionValue& Value)
 		// add yaw and pitch input to controller
 		AddControllerYawInput(LookAxisVector.X);
 		AddControllerPitchInput(LookAxisVector.Y);
+	}
+}
+
+void AYZ_TestCharacter::BeginPlay()
+{
+	Super::BeginPlay();
+
+	if(IsValid(AbilitySystemComponent))
+	{
+		// Give player HP set
+		HPAttributesSet = AbilitySystemComponent ->GetSet<UHPAttributeSet>();
 	}
 }

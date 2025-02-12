@@ -6,6 +6,7 @@
 #include "Components/SkeletalMeshComponent.h"
 #include "YZ_TestWeaponComponent.generated.h"
 
+class USphereComponent;
 class AYZ_TestCharacter;
 
 UCLASS(Blueprintable, BlueprintType, ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
@@ -44,11 +45,14 @@ public:
 	/** Attaches the actor to a FirstPersonCharacter */
 	UFUNCTION(BlueprintCallable, Category="Weapon")
 	bool AttachWeapon(AYZ_TestCharacter* TargetCharacter);
-
+	
 	/** Make the weapon Fire a Projectile */
 	UFUNCTION(BlueprintCallable, Category="Weapon")
 	void Fire();
 
+	/** Trigger gravity gun effect */
+	UFUNCTION(BlueprintCallable, Category="Weapon")
+	void Attract();
 protected:
 	/** Ends gameplay for this component. */
 	UFUNCTION()
@@ -57,4 +61,24 @@ protected:
 private:
 	/** The Character holding this weapon*/
 	AYZ_TestCharacter* Character;
+	TArray<AActor*> OverlappingTargets;
+	FVector GetTargetLocation();
+public:
+	UPROPERTY(BlueprintReadWrite,EditAnywhere, Category = "Gravity Gun")
+	float FiringForce;
+	
+	UPROPERTY(BlueprintReadWrite,EditAnywhere, Category = "Gravity Gun")
+	float PickUpRadius;
+
+	UPROPERTY(BlueprintReadWrite,EditAnywhere, Category = "Gravity Gun")
+	float AttractionForce;
+	
+	UPROPERTY(BlueprintReadOnly,VisibleAnywhere, Category="Components")
+	USphereComponent* SphereCollider;
+
+	UPROPERTY(BlueprintReadOnly,VisibleAnywhere, Category = "Gravity Gun")
+	AActor* Target;
+
+	UPROPERTY(BlueprintReadWrite,EditAnywhere, Category = "Gravity Gun")
+	bool SingleTarget;
 };

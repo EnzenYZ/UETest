@@ -10,17 +10,95 @@
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "Animation/AnimInstance.h"
+#include "Components/SphereComponent.h"
 #include "Engine/LocalPlayer.h"
+#include "Engine/StaticMeshActor.h"
 #include "Engine/World.h"
+#include "Framework/Application/AnalogCursor.h"
 
 // Sets default values for this component's properties
-UYZ_TestWeaponComponent::UYZ_TestWeaponComponent()
+UYZ_TestWeaponComponent::UYZ_TestWeaponComponent() 
 {
 	// Default offset from the character location for projectiles to spawn
-	MuzzleOffset = FVector(100.0f, 0.0f, 10.0f);
+	MuzzleOffset = FVector(300.0f, 0.0f, 30.0f);
+	FiringForce = 1000.0f;
+	PickUpRadius = 200.0f;
+	SingleTarget = true;
+	AttractionForce = 500.0f;
+	
+	OverlappingTargets.Empty();
+	
+	SphereCollider = CreateDefaultSubobject<USphereComponent>(TEXT("SphereCollider"));
+	SphereCollider->SetSphereRadius(PickUpRadius);
+	SphereCollider->SetCollisionResponseToAllChannels(ECR_Overlap);
 }
 
+FVector UYZ_TestWeaponComponent::GetTargetLocation()
+{
+	APlayerController* PlayerController = Cast<APlayerController>(Character->GetController());
+	const FRotator SpawnRotation = PlayerController->PlayerCameraManager->GetCameraRotation();
+	return GetOwner()->GetActorLocation() + SpawnRotation.RotateVector(MuzzleOffset);
+}
 
+// Attract a movable obj while Shoot Key is being held down
+void UYZ_TestWeaponComponent::Attract()
+{
+	if (Character == nullptr || Character->GetController() == nullptr)
+	{
+		return;	
+	}
+	
+	//Check if a movable object is within the pickup radius
+	//Attract movable object in radius
+	if (SingleTarget)
+	{
+		if (Target == nullptr)
+		{
+			SphereCollider->GetOverlappingActors(OverlappingTargets, AStaticMeshActor::StaticClass());
+			if (OverlappingTargets.Num() > 0)
+			{
+				Target = OverlappingTargets[0];
+			}
+		}
+		else if (Target != nullptr)
+		{
+			if (UWorld* const World = GetWorld(); World != nullptr)
+			{
+				UPrimitiveComponent* TargetComp = Target->FindComponentByClass<UPrimitiveComponent>();
+				FVector DirectionToAttract = (GetTargetLocation() - TargetComp->GetComponentLocation() ).GetSafeNormal();
+
+				TargetComp->SetSimulatePhysics(false);	
+
+				FVector UpdatedLocation = TargetComp->GetComponentLocation() + DirectionToAttract * AttractionForce * FApp::GetDeltaTime();
+				TargetComp->SetWorldLocation(UpdatedLocation);
+			}
+		}
+	}
+	else
+	{	// Multi target gravity gun
+		
+		SphereCollider->GetOverlappingActors(OverlappingTargets, AStaticMeshActor::StaticClass());
+		
+		if (OverlappingTargets.Num() > 0)
+		{
+			if (UWorld* const World = GetWorld(); World != nullptr)
+			{
+				for(auto t : OverlappingTargets)
+				{
+					UPrimitiveComponent* TargetComp = t->FindComponentByClass<UPrimitiveComponent>();
+					FVector DirectionToAttract = (GetTargetLocation() - TargetComp->GetComponentLocation() ).GetSafeNormal();
+
+					TargetComp->SetSimulatePhysics(false);	
+
+					FVector UpdatedLocation = TargetComp->GetComponentLocation() + DirectionToAttract * AttractionForce * FApp::GetDeltaTime();
+					TargetComp->SetWorldLocation(UpdatedLocation);
+				}
+			}
+		}
+	}
+}
+
+// Mod to release the gravity afflicted obj
 void UYZ_TestWeaponComponent::Fire()
 {
 	if (Character == nullptr || Character->GetController() == nullptr)
@@ -28,23 +106,33 @@ void UYZ_TestWeaponComponent::Fire()
 		return;
 	}
 
-	// Try and fire a projectile
-	if (ProjectileClass != nullptr)
+	if (SingleTarget)
 	{
-		UWorld* const World = GetWorld();
-		if (World != nullptr)
+		if (Target == nullptr)
+			return;
+		else
 		{
-			APlayerController* PlayerController = Cast<APlayerController>(Character->GetController());
-			const FRotator SpawnRotation = PlayerController->PlayerCameraManager->GetCameraRotation();
-			// MuzzleOffset is in camera space, so transform it to world space before offsetting from the character location to find the final muzzle position
-			const FVector SpawnLocation = GetOwner()->GetActorLocation() + SpawnRotation.RotateVector(MuzzleOffset);
-	
-			//Set Spawn Collision Handling Override
-			FActorSpawnParameters ActorSpawnParams;
-			ActorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButDontSpawnIfColliding;
-	
-			// Spawn the projectile at the muzzle
-			World->SpawnActor<AYZ_TestProjectile>(ProjectileClass, SpawnLocation, SpawnRotation, ActorSpawnParams);
+			UPrimitiveComponent* TargetComp = Target->FindComponentByClass<UPrimitiveComponent>();
+			
+			TargetComp-> SetSimulatePhysics(true);
+			TargetComp-> AddImpulse(this->GetRightVector() * FiringForce, NAME_None, true);
+
+			OverlappingTargets.Empty();	
+			Target = nullptr;
+		}
+	}
+	else
+	{
+		if (OverlappingTargets.Num() > 0)
+		{
+			for(auto t : OverlappingTargets)
+			{
+				UPrimitiveComponent* TargetComp = t->FindComponentByClass<UPrimitiveComponent>();
+
+				TargetComp-> SetSimulatePhysics(true);
+				TargetComp-> AddImpulse(this->GetRightVector() * FiringForce, NAME_None, true);
+			}
+			OverlappingTargets.Empty();
 		}
 	}
 	
@@ -80,6 +168,10 @@ bool UYZ_TestWeaponComponent::AttachWeapon(AYZ_TestCharacter* TargetCharacter)
 	FAttachmentTransformRules AttachmentRules(EAttachmentRule::SnapToTarget, true);
 	AttachToComponent(Character->GetMesh1P(), AttachmentRules, FName(TEXT("GripPoint")));
 
+	//Collider Y should be Radius + 60 to ensure it is always in front of the barrel
+	SphereCollider->AttachToComponent(this, AttachmentRules);
+	SphereCollider->SetSphereRadius(PickUpRadius);
+	SphereCollider->AddRelativeLocation(FVector(0.0f, PickUpRadius + 60.f, 0.0f));
 	// Set up action bindings
 	if (APlayerController* PlayerController = Cast<APlayerController>(Character->GetController()))
 	{
@@ -92,10 +184,11 @@ bool UYZ_TestWeaponComponent::AttachWeapon(AYZ_TestCharacter* TargetCharacter)
 		if (UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(PlayerController->InputComponent))
 		{
 			// Fire
-			EnhancedInputComponent->BindAction(FireAction, ETriggerEvent::Triggered, this, &UYZ_TestWeaponComponent::Fire);
+			EnhancedInputComponent->BindAction(FireAction, ETriggerEvent::Completed, this, &UYZ_TestWeaponComponent::Fire);
+			EnhancedInputComponent->BindAction(FireAction, ETriggerEvent::Triggered, this, &UYZ_TestWeaponComponent::Attract);
 		}
 	}
-
+	
 	return true;
 }
 
