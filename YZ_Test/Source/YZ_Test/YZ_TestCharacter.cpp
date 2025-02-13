@@ -12,6 +12,7 @@
 #include "Engine/LocalPlayer.h"
 #include "AbilitySystemComponent.h"
 #include "HPAttributeSet.h"
+#include "Kismet/GameplayStatics.h"
 
 DEFINE_LOG_CATEGORY(LogTemplateCharacter);
 
@@ -102,6 +103,11 @@ void AYZ_TestCharacter::Look(const FInputActionValue& Value)
 		AddControllerYawInput(LookAxisVector.X);
 		AddControllerPitchInput(LookAxisVector.Y);
 	}
+}
+
+void AYZ_TestCharacter::RestartLevel()
+{
+	UGameplayStatics::OpenLevel(GetWorld(), FName(*GetWorld()->GetName()));
 }
 
 void AYZ_TestCharacter::BeginPlay()
